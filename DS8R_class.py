@@ -4,14 +4,24 @@ import os
 class DS8R:
     """A Python controller for DS8R device.
 
-    :param demand: Between 10 and 5000 (default: 150)
-    :param enabled: 0 (disabled) or 1 (enabed) (default: 1)
-    :param pulse_width: From 100 to 2000 (default: 1000)
-    :param dwell: From 1 to 999 (default: 10)
-    :param mode: 1 (mono-phasic), or 2 (bi-phasic) (default: 1)
-    :param polarity: 1 (positive), 2 (negative), or 3 (alternating) (default: 1)
-    :param source: 1 (internal) or 2 (external) (default: 1)
-    :param recovery: From 10 to 100 (default: 10)
+    Parameters
+    ----------
+    demand : int
+        Between 10 and 5000 (default: 150)
+    enabled : int
+        0 (disabled) or 1 (enabed) (default: 1)
+    pulse_width : int
+        From 100 to 2000 (default: 1000)
+    dwell : int
+        From 1 to 999 (default: 10)
+    mode : int
+        1 (mono-phasic), or 2 (bi-phasic) (default: 1)
+    polarity : int
+        1 (positive), 2 (negative), or 3 (alternating) (default: 1)
+    source : int
+        1 (internal) or 2 (external) (default: 1)
+    recovery : int
+        From 10 to 100 (default: 10)
 
     Examples
     --------
@@ -19,15 +29,15 @@ class DS8R:
     If you don't pass any argument, the object will use the default values.
     These parameters are not applied to the setting of the DS8R device yet.
     They will be changed when you use a method `run()`.
-    >>> obj = DS8R()
+    >>> c = DS8R()
 
     If you want to change a parameter value of an existing DS8R object,
     you can do it just by assigning a new value to the property.
-    >>> obj.demand = 20
+    >>> c.demand = 20
 
     Finally, you can apply the parameters to DS8R and trigger to activate
     by running `run()` method as below.
-    >>> obj.run()
+    >>> c.run()
     """
 
     def __init__(self,

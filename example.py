@@ -1,6 +1,6 @@
 import time
 
-from DS8R import DS8R
+from DS8R_class import DS8R
 
 level5 = DS8R(demand=20, pulse_width=1000, enabled=1, dwell=10,
               mode=1, polarity=1, source=1, recovery=20)
