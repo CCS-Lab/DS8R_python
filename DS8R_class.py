@@ -1,10 +1,6 @@
-# 1.Initialization
-#    level1 = DS8R()
-#    after initialization, you can see the object on the Workspace.
-#
-# 2. Parameter setting
-#    level1.set_DS8R(<parameters> = <values>)
-#         setting the Parameter value.
+# 1. Parameter setting
+#    level1 = DS8R(<parameters> = <values>)
+#         Making an object of the DS8R class and setting the Parameter values.
 #         This function doesn't change the DS8R's parameter.
 #         DS8R's parameter will be changed when you use function run_DS8R()
 #
@@ -27,16 +23,6 @@ import os
 class DS8R:
 
     def __init__(self, Demand = 150, Enabled = 1, PulseWidth = 1000, Dwell = 10, Mode = 1, Polarity = 1, Source = 1, Recovery = 10):
-        self.Demand = Demand # 150(default) / from 10 to 5000
-        self.Enabled = Enabled  # 1(default) / 0 Disabled, 1 Enabled
-        self.PulseWidth = PulseWidth # 1000(default) / from 100 to 2000
-        self.Dwell = Dwell # 10(default) / from 1 to 990
-        self.Mode = Mode # 1(default) / 1 Mono-Phasic, 2 Bi-Phasic
-        self.Polarity = Polarity # 1(default) /  1 Positive, 2 Negative, 3 Alternating
-        self.Source = Source # 1(default) / 1 internal, 2 External
-        self.Recovery = Recovery # 10(default) / from 10 to 100
-
-    def set_DS8R(self, Demand = 150, Enabled = 1, PulseWidth = 1000, Dwell = 10, Mode = 1, Polarity = 1, Source = 1, Recovery = 10):
 
         for input in [Demand, Enabled, PulseWidth, Dwell, Mode, Polarity, Source, Recovery]:
             if not isinstance(input, int):

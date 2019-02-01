@@ -13,11 +13,10 @@ Files provided here include:
   
 **Important:** Before use, make sure you have installed the original DS8R software, and saved all the files in one folder.  
 
-The code for the DS8R control using Python should be implemented using three basic parts as follows (refer to `DS8R_API_Example.py` for an example use):  
+The code for the DS8R control using Python should be implemented using two basic parts as follows (refer to `DS8R_API_Example.py` for an example use):  
     
 ```
-level1 = DS8R() # create an object of DS8R class     
-level1 = DS8R(<parameter> = <value>) # set desired parameters and their values
+level1 = DS8R(<parameter> = <value>) # create an object of the DS8R class and set parameter values.
 run_DS8R(level1) # apply parameters and trigger
 ```
 If you have any questions or comments, please contact Hoyoung Doh: comicroad11@gmail.com
