@@ -6,21 +6,21 @@ class DS8R:
 
     Parameters
     ----------
-    demand : int
+    demand : int, optional
         Between 10 and 5000 (default: 150)
-    enabled : int
+    enabled : {0, 1}, optional
         0 (disabled) or 1 (enabed) (default: 1)
-    pulse_width : int
+    pulse_width : int, optional
         From 100 to 2000 (default: 1000)
-    dwell : int
+    dwell : int, optional
         From 1 to 999 (default: 10)
-    mode : int
+    mode : {1, 2}, optional
         1 (mono-phasic), or 2 (bi-phasic) (default: 1)
-    polarity : int
+    polarity : {1, 2, 3}, optional
         1 (positive), 2 (negative), or 3 (alternating) (default: 1)
-    source : int
+    source : {1, 2}, optional
         1 (internal) or 2 (external) (default: 1)
-    recovery : int
+    recovery : int, optional
         From 10 to 100 (default: 10)
 
     Examples
@@ -29,14 +29,17 @@ class DS8R:
     If you don't pass any argument, the object will use the default values.
     These parameters are not applied to the setting of the DS8R device yet.
     They will be changed when you use a method `run()`.
+
     >>> c = DS8R()
 
     If you want to change a parameter value of an existing DS8R object,
     you can do it just by assigning a new value to the property.
+
     >>> c.demand = 20
 
     Finally, you can apply the parameters to DS8R and trigger to activate
     by running `run()` method as below.
+
     >>> c.run()
     """
 
