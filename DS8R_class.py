@@ -9,25 +9,25 @@ class DS8R:
     demand : int, optional
         Between 1 and 300 (default: 20)
 
-        # "demand" represents current output.
-        - The value of 1 represents 0.1mA.
-            For example, the value of 24 represents 2.4mA.
-        - For safety issues, the input range is limited to 300 (30.0mA).
-        - The values from 1 to 19 (0.1 ~ 1.9mA) may not be correctly implemented
+        # "demand" indicates current output.
+        - The value of 1 indicates 0.1mA.
+            For example, the value of 24 indicates 2.4mA.
+        - Due to safety issues, the input range is limited to 300 (30.0mA).
+        - Values from 1 to 19 (0.1 ~ 1.9mA) may not be correctly implemented
             due to the limitations of the device.
 
     enabled : {0, 1}, optional
         0 (disabled) or 1 (enabled) (default: 1)
 
-        # "enabled" represents output status.
-        - The device triggers an output only if it is enabled.
+        # "enabled" indicates output status.
+        - The output will only be triggered if the output is enabled.
 
     pulse_width : int, optional
         From 50 to 2000, multiple of 10 (default: 100)
 
-        # "pulse_width" represents pulse duration.
-        - The value of 1 represents 1 microsecond.
-            For example, the value of 100 represents 100 microseconds.
+        # "pulse_width" indicates pulse duration.
+        - The value of 1 indicates 1 microsecond.
+            For example, the value of 100 indicates 100 microseconds.
         - The pulse duration increments by 10 microsecond steps.
             Therefore, the "pulse_width" value must be a multiple of 10.
 
@@ -35,23 +35,23 @@ class DS8R:
     dwell : int, optional
         From 1 to 999 (default: 1)
 
-        # "dwell" represents interphase interval in biphasic mode.
-        - Interphase interval is the interval
-            between the stimulus phase and the recovery phase.
-        - The value of 1 represents 1 microsecond.
-            For example, the value of 100 represents 100 microseconds.
+        # "dwell" indicates interphase interval in biphasic mode.
+        - Interphase interval is the interval between
+            the stimulus phase and the recovery phase.
+        - The value of 1 indicates 1 microsecond.
+            For example, the value of 100 indicates 100 microseconds.
 
     mode : {1, 2}, optional
         1 (mono-phasic), or 2 (bi-phasic) (default: 1)
 
-        #  "mode" represents pulse mode.
+        #  "mode" indicates pulse mode.
         - In monophasic mode, only positive or negative current is generated.
         - In biphasic mode, positive and negative currents are generated alternately.
 
     polarity : {1, 2, 3}, optional
         1 (positive), 2 (negative), or 3 (alternating) (default: 1)
 
-        # "polarity" represents pulse polarity.
+        # "polarity" indicates pulse polarity.
         - Positive is the standard stimulation mode.
         - Negative reverses the polarity of all pulses.
         - In alternating mode, each successive trigger results in a polarity reversal.
@@ -59,15 +59,15 @@ class DS8R:
     source : {1, 2}, optional
         1 (internal) or 2 (external) (default: 1)
 
-        # "source" represents source of pulse amplitude control.
+        # "source" indicates the source of pulse amplitude control.
         - Internal is the front panel control (including software).
         - External is the external analogue voltage control.
 
     recovery : int, optional
         From 10 to 100 (default: 100)
 
-        # "recovery" represents recovery phase ratio in biphasic mode.
-        - At 100%, stimulus phase and recovery phase are the same in duration and amplitude,
+        # "recovery" indicates the recovery phase ratio in biphasic mode.
+        - At 100%, stimulus and recovery phases are the same in duration and amplitude,
         - As the ratio is reduced from 100% the amplitude of the recovery phase decreases,
             and its duration increases to preserve charge balancing.
 
