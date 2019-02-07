@@ -7,13 +7,13 @@ class DS8R:
     Parameters
     ----------
     demand : int, optional
-        Between 10 and 5000 (default: 150)
+        Between 0 and 300 (default: 20)
     enabled : {0, 1}, optional
         0 (disabled) or 1 (enabed) (default: 1)
     pulse_width : int, optional
-        From 100 to 2000 (default: 1000)
+        From 50 to 2000, multiple of 10 (default: 100)
     dwell : int, optional
-        From 1 to 999 (default: 10)
+        From 1 to 999 (default: 1)
     mode : {1, 2}, optional
         1 (mono-phasic), or 2 (bi-phasic) (default: 1)
     polarity : {1, 2, 3}, optional
@@ -21,11 +21,11 @@ class DS8R:
     source : {1, 2}, optional
         1 (internal) or 2 (external) (default: 1)
     recovery : int, optional
-        From 10 to 100 (default: 10)
+        From 10 to 100 (default: 100)
 
     Examples
     --------
-    First, you should make an DS8R object with parmeters as arguments.
+    First, you must make an DS8R object with parmeters as arguments.
     If you don't pass any argument, the object will use the default values.
     These parameters are not applied to the setting of the DS8R device yet.
     They will be changed when you use a method `run()`.
@@ -44,14 +44,14 @@ class DS8R:
     """
 
     def __init__(self,
-                 demand: int = 150,
+                 demand: int = 20,
                  enabled: int = 1,
-                 pulse_width: int = 1000,
-                 dwell: int = 10,
+                 pulse_width: int = 100,
+                 dwell: int = 1,
                  mode: int = 1,
                  polarity: int = 1,
                  source: int = 1,
-                 recovery: int = 10):
+                 recovery: int = 100):
         self.demand = demand
         self.enabled = enabled
         self.pulse_width = pulse_width
@@ -69,11 +69,16 @@ class DS8R:
     def demand(self, obj: int):
         if not isinstance(obj, int):
             raise TypeError('Please input an integer for a parameter value.')
-        if 10 <= obj <= 5000:
+
+        if 0 <= obj <= 300:
             self.__demand = obj
+
+            if 0 <= obj <= 19:
+                print('"Demand" values from 0 to 19 may not be correctly implemented '
+                      'due to the limitations of the device.')
         else:
             raise ValueError(
-                'The parameter "demand" should be in a range from 10 to 5000.')
+                'The parameter "demand" must be in a range from 0 to 300.')
 
     @property
     def enabled(self) -> int:
@@ -88,7 +93,7 @@ class DS8R:
             self.__enabled = obj
         else:
             raise ValueError(
-                'The parameter "enabled" should be 0 (disabled) or 1 (enabled).')
+                'The parameter "enabled" must be either 0 (disabled) or 1 (enabled).')
 
     @property
     def pulse_width(self) -> int:
@@ -99,11 +104,12 @@ class DS8R:
         if not isinstance(obj, int):
             raise TypeError('Please input an integer for a parameter value.')
 
-        if 100 <= obj <= 2000:
+        if 50 <= obj <= 2000 and obj % 10 == 0:
             self.__pulse_width = obj
         else:
             raise ValueError(
-                "For PulseWidth, correct input range is from 100 to 2000")
+                'The parameter "pulse_width" must be in a range from 50 to 2000, '
+                'and the input value must be a multiple of 10.')
 
     @property
     def dwell(self) -> int:
@@ -117,7 +123,7 @@ class DS8R:
         if 1 <= obj <= 990:
             self.__dwell = obj
         else:
-            raise ValueError("For Dwell, correct input range is from 1 to 990")
+            raise ValueError('The parameter "dwell" must be in a range from 1 to 990')
 
     @property
     def mode(self) -> int:
@@ -132,7 +138,7 @@ class DS8R:
             self.__mode = obj
         else:
             raise ValueError(
-                "For Mode, 1 = Monophasic, 2 = Biphasic, Others are wrong")
+                'The parameter "mode" must be either 1 (Monophasic) or 2 (Biphasic).')
 
     @property
     def polarity(self) -> int:
@@ -147,7 +153,7 @@ class DS8R:
             self.__polarity = obj
         else:
             raise ValueError(
-                "For Polarity,  1 = Positive, 2 = Negative, 3 = Alternating, Others are wrong")
+                'The parameter "polarity" must be  either 1 (Positive), 2 (Negative), or 3 (Alternating).')
 
     @property
     def source(self) -> int:
@@ -162,7 +168,7 @@ class DS8R:
             self.__source = obj
         else:
             raise ValueError(
-                "For Source, 1 = internal, 2 = External, Others are wrong")
+                'The parameter "source" must be either 1 (internal) or 2 (External).')
 
     @property
     def recovery(self) -> int:
@@ -177,9 +183,10 @@ class DS8R:
             self.__recovery = obj
         else:
             raise ValueError(
-                "For Recovery, correct input range is from 10 to 100")
+                'The parameter "recovery" must be in a range from 10 to 100')
 
-    def run(self):
+
+    def run(self, force = False):
         command = ('{filename} {mode} {polarity} {source} {demand} '
                    '{pulse_width} {dwell} {recovery} {enabled}')\
             .format(filename='DS8R_API',
@@ -191,4 +198,13 @@ class DS8R:
                     dwell=self.dwell,
                     recovery=self.recovery,
                     enabled=self.enabled)
-        os.system(command)
+        if self.demand <= 150:
+            os.system(command)
+        elif force:
+            os.system(command)
+        else:
+            raise ValueError(
+                '"Demand" values greater than 150 may cause severe injuries or death. '
+                'If you want to implement a "demand" value greater than 150, '
+                'use "c.run(force=True)".')
+
