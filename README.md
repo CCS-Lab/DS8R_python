@@ -1,11 +1,13 @@
 # Control of Digitimer DS8R using Python
 
 The files provided here enable control of [Digitimer DS8R][ds8r] current stimulator using Python.
-This repo is a Python porting of the [cocoanlab/DS8R_matlab][ds8r-matlab].
-The code is compatiable only for Python 3.5 or higher.
+The code is compatiable for *Python 3.5 or higher* and tested on a computer with 64-bit Windows 10.1.
+
+This repository is a Python porting of [cocoanlab/DS8R_matlab][ds8r-matlab], by favor of Dr. Choong-Wan Woo and Sungwoo Lee in [COCOAN laboratory][cocoanlab].
 
 [ds8r]: https://digitimer.com/products/human-neurophysiology/peripheral-stimulators-2/ds8/
 [ds8r-matlab]: https://github.com/cocoanlab/DS8R_matlab
+[cocoanlab]: https://cocoanlab.github.io/
 
 Files provided here include:
 
@@ -27,4 +29,6 @@ ctl = DS8R(demand=20, pulse_width=1000, enabled=1, dwell=10,
 ctl.run()
 ```
 
-If you have any questions or comments, please contact Hoyoung Doh: comicroad11@gmail.com
+If you have any questions or comments, please post an issue in the GitHub repository [here][github-issue].
+
+[github-issue]: https://github.com/CCS-Lab/DS8R_python/issues
