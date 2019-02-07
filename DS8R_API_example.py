@@ -9,15 +9,15 @@ level2 = DS8R(Demand = 30, PulseWidth = 700, Enabled = 1)
 level1 = DS8R(Demand = 20, PulseWidth = 600,  Enabled = 1)
 
 level5.run_DS8R()
-time.sleep(0.5)
+time.sleep(1)
 
 level4.run_DS8R()
-time.sleep(0.5)
+time.sleep(1)
 
 level3.run_DS8R()
-time.sleep(0.5)
+time.sleep(1)
 
 level2.run_DS8R()
-time.sleep(0.5)
+time.sleep(1)
 
 level1.run_DS8R()
