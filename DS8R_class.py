@@ -252,7 +252,7 @@ class DS8R:
             os.system(command)
         else:
             raise ValueError(
-                'A "demand" value greater than 150 may cause severe injury or death. '
+                'A "demand" value greater than 150 may cause injury. '
                 'If you want to implement a "demand" value greater than 150, '
                 'use "c.run(force=True)".')
 
