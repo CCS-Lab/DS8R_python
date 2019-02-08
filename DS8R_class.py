@@ -12,7 +12,7 @@ class DS8R:
         # "demand" indicates current output.
         - The value of 1 indicates 0.1mA.
             For example, the value of 24 indicates 2.4mA.
-        - Due to safety issues, the input range is limited to 300 (30.0mA).
+        - Due to safety issues, the current output is limited to 300 (30.0mA).
         - Values from 1 to 19 (0.1 ~ 1.9mA) may not be correctly implemented
             due to the limitations of the device.
 
@@ -20,7 +20,7 @@ class DS8R:
         0 (disabled) or 1 (enabled) (default: 1)
 
         # "enabled" indicates output status.
-        - The output will only be triggered if the output is enabled.
+        - The output will only be triggered if it is enabled.
 
     pulse_width : int, optional
         From 50 to 2000, multiple of 10 (default: 100)
@@ -45,8 +45,9 @@ class DS8R:
         1 (mono-phasic), or 2 (bi-phasic) (default: 1)
 
         #  "mode" indicates pulse mode.
-        - In monophasic mode, only positive or negative current is generated.
-        - In biphasic mode, positive and negative currents are generated alternately.
+        - In monophasic mode, only positive or negative currents are generated.
+        - In biphasic mode, positive and negative currents alternate.
+            One serves as a stimulus phase and the other serves as a recovery phase.
 
     polarity : {1, 2, 3}, optional
         1 (positive), 2 (negative), or 3 (alternating) (default: 1)
@@ -73,10 +74,10 @@ class DS8R:
 
     Examples
     --------
-    First, you must make an DS8R object with parmeters as arguments.
+    First, you must make an DS8R object with parameters as arguments.
     If you don't pass any argument, the object will use the default values.
     These parameters are not applied to the setting of the DS8R device yet.
-    They will be changed when you use a method `run()`.
+    They will be changed when you use the method `run()`.
 
     >>> c = DS8R()
 
@@ -85,7 +86,7 @@ class DS8R:
 
     >>> c.demand = 20
 
-    Finally, you can apply the parameters to DS8R and trigger to activate
+    Finally, you can apply the parameters to DS8R and trigger a current output
     by running `run()` method as below.
 
     >>> c.run()
@@ -252,7 +253,7 @@ class DS8R:
             os.system(command)
         else:
             raise ValueError(
-                'A "demand" value greater than 150 may cause injury. '
-                'If you want to implement a "demand" value greater than 150, '
+                'A "demand" value greater than 150 (15.0mA) may cause injury. '
+                'To apply a current higher than 15.0mA, '
                 'use "c.run(force=True)".')
 
