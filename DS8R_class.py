@@ -1,76 +1,81 @@
+"""
+Define python class 'DS8R' and its method 'run()' used to control DS8R device.
+"""
 import os
 
 
 class DS8R:
     """A Python controller for DS8R device.
 
-    Parameters
+    Attributes
     ----------
-    demand : int, optional
-        Between 1 and 300 (default: 20)
-
-        # "demand" indicates current output.
-        - The value of 1 indicates 0.1mA.
-            For example, the value of 24 indicates 2.4mA.
-        - Due to safety issues, the current output is limited to 300 (30.0mA).
-        - Values from 1 to 19 (0.1 ~ 1.9mA) may not be correctly implemented
-            due to the limitations of the device.
-
-    enabled : {0, 1}, optional
-        0 (disabled) or 1 (enabled) (default: 1)
-
-        # "enabled" indicates output status.
-        - The output will only be triggered if it is enabled.
-
-    pulse_width : int, optional
-        From 50 to 2000, multiple of 10 (default: 100)
-
-        # "pulse_width" indicates pulse duration.
-        - The value of 1 indicates 1 microsecond.
-            For example, the value of 100 indicates 100 microseconds.
-        - The pulse duration increments by 10 microsecond steps.
-            Therefore, the "pulse_width" value must be a multiple of 10.
-
-
-    dwell : int, optional
-        From 1 to 999 (default: 1)
-
-        # "dwell" indicates interphase interval in biphasic mode.
-        - Interphase interval is the interval between
-            the stimulus phase and the recovery phase.
-        - The value of 1 indicates 1 microsecond.
-            For example, the value of 100 indicates 100 microseconds.
-
     mode : {1, 2}, optional
-        1 (mono-phasic), or 2 (bi-phasic) (default: 1)
+        "Mode" indicates pulse mode.
+        It can be either 1 (mono-phasic) or 2 (bi-phasic) (default: 1).
 
-        #  "mode" indicates pulse mode.
-        - In monophasic mode, only positive or negative currents are generated.
-        - In biphasic mode, positive and negative currents alternate.
-            One serves as a stimulus phase and the other serves as a recovery phase.
+        - In **mono-phasic** mode, only positive or negative currents are generated.
+        - In **bi-phasic** mode, positive and negative currents alternate.
+          One serves as a stimulus phase and the other serves as a recovery phase.
 
     polarity : {1, 2, 3}, optional
-        1 (positive), 2 (negative), or 3 (alternating) (default: 1)
+        "Polarity" indicates pulse polarity.
+        It can be either 1 (positive), 2 (negative), or 3 (alternating) (default: 1).
 
-        # "polarity" indicates pulse polarity.
-        - Positive is the standard stimulation mode.
-        - Negative reverses the polarity of all pulses.
-        - In alternating mode, each successive trigger results in a polarity reversal.
+        - **Positive** is the standard stimulation mode.
+        - **Negative** reverses the polarity of all pulses.
+        - In **alternating** mode, each successive trigger results in a polarity reversal.
 
     source : {1, 2}, optional
-        1 (internal) or 2 (external) (default: 1)
+        "Source" indicates the source of pulse amplitude control.
+        It can be either 1 (internal) or 2 (external) (default: 1).
 
-        # "source" indicates the source of pulse amplitude control.
-        - Internal is the front panel control (including software).
-        - External is the external analogue voltage control.
+        - **Internal** is the front panel control (including software).
+        - **External** is the external analogue voltage control.
+
+    demand : int, optional
+        "Demand" indicates current output.
+        It can have a value between 1 and 300 (default: 20).
+
+        The value of 1 indicates 0.1mA
+        (e.g. the value of 24 indicates 2.4mA).
+        Due to safety issues, the current output is limited to 300 (30.0mA).
+        Values from 1 to 19 (0.1 ~ 1.9mA) may not be correctly implemented
+        due to the limitations of the device.
+
+    pulse_width : int, optional
+        "Pulse_width" indicates pulse duration.
+        It can have a value between 50 and 2000,
+        which have to be a multiple of 10 (default: 100)
+
+        The value of 1 indicates 1 microsecond
+        (e.g. the value of 100 indicates 100 microseconds).
+        Since pulse duration increments by 10 microsecond steps,
+        the "pulse_width" value must be a multiple of 10.
+
+    dwell : int, optional
+        "Dwell" indicates interphase interval in biphasic mode.
+        It can have a value between 1 and 999 (default: 1).
+
+        Interphase interval is the interval between
+        the stimulus phase and the recovery phase.
+        The value of 1 indicates 1 microsecond
+        (e.g. the value of 100 indicates 100 microseconds).
 
     recovery : int, optional
-        From 10 to 100 (default: 100)
+        "Recovery" indicates the recovery phase ratio in biphasic mode.
+        It can have a value between 10 and 100 (default: 100)
 
-        # "recovery" indicates the recovery phase ratio in biphasic mode.
-        - At 100%, stimulus and recovery phases are the same in duration and amplitude,
-        - As the ratio is reduced from 100% the amplitude of the recovery phase decreases,
-            and its duration increases to preserve charge balancing.
+        At 100%, stimulus and recovery phases are the same in duration and amplitude.
+        As the ratio is reduced from 100% the amplitude of the recovery phase decreases,
+        and its duration increases to preserve charge balancing.
+
+    enabled : {0, 1}, optional
+        "Enabled" indicates output status.
+        It can have 0 (disabled) or 1 (enabled) (default: 1).
+
+        - In **Disabled** state, the current output will not be triggered.
+        - In **Enabled** state, the current output will be triggered.
+
 
     Examples
     --------
@@ -86,93 +91,29 @@ class DS8R:
 
     >>> c.demand = 20
 
-    Finally, you can apply the parameters to DS8R and trigger a current output
-    by running `run()` method as below.
+    Finally, by running `run()` method as below,
+    you can apply the parameters to the DS8R device and trigger a current output.
 
     >>> c.run()
     """
 
     def __init__(self,
-                 demand: int = 20,
-                 enabled: int = 1,
-                 pulse_width: int = 100,
-                 dwell: int = 1,
                  mode: int = 1,
                  polarity: int = 1,
                  source: int = 1,
-                 recovery: int = 100):
-        self.demand = demand
-        self.enabled = enabled
-        self.pulse_width = pulse_width
-        self.dwell = dwell
+                 demand: int = 20,
+                 pulse_width: int = 100,
+                 dwell: int = 1,
+                 recovery: int = 100,
+                 enabled: int = 1):
         self.mode = mode
         self.polarity = polarity
         self.source = source
+        self.demand = demand
+        self.pulse_width = pulse_width
+        self.dwell = dwell
         self.recovery = recovery
-
-    @property
-    def demand(self) -> int:
-        return self.__demand
-
-    @demand.setter
-    def demand(self, obj: int):
-        if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
-
-        if 1 <= obj <= 300:
-            self.__demand = obj
-
-            if 1 <= obj <= 19:
-                print('"demand" values from 1 to 19 may not be correctly implemented '
-                      'due to the limitations of the device.')
-        else:
-            raise ValueError(
-                'The parameter "demand" must be in a range from 1 to 300.')
-
-    @property
-    def enabled(self) -> int:
-        return self.__enabled
-
-    @enabled.setter
-    def enabled(self, obj):
-        if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
-
-        if obj == 0 or obj == 1:
-            self.__enabled = obj
-        else:
-            raise ValueError(
-                'The parameter "enabled" must be either 0 (disabled) or 1 (enabled).')
-
-    @property
-    def pulse_width(self) -> int:
-        return self.__pulse_width
-
-    @pulse_width.setter
-    def pulse_width(self, obj: int):
-        if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
-
-        if 50 <= obj <= 2000 and obj % 10 == 0:
-            self.__pulse_width = obj
-        else:
-            raise ValueError(
-                'The parameter "pulse_width" must be in a range from 50 to 2000, '
-                'and the input value must be a multiple of 10.')
-
-    @property
-    def dwell(self) -> int:
-        return self.__dwell
-
-    @dwell.setter
-    def dwell(self, obj: int):
-        if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
-
-        if 1 <= obj <= 990:
-            self.__dwell = obj
-        else:
-            raise ValueError('The parameter "dwell" must be in a range from 1 to 990')
+        self.enabled = enabled
 
     @property
     def mode(self) -> int:
@@ -220,6 +161,55 @@ class DS8R:
                 'The parameter "source" must be either 1 (internal) or 2 (External).')
 
     @property
+    def demand(self) -> int:
+        return self.__demand
+
+    @demand.setter
+    def demand(self, obj: int):
+        if not isinstance(obj, int):
+            raise TypeError('Please input an integer for a parameter value.')
+
+        if 1 <= obj <= 300:
+            self.__demand = obj
+
+            if 1 <= obj <= 19:
+                print('"demand" values from 1 to 19 may not be correctly implemented '
+                      'due to the limitations of the device.')
+        else:
+            raise ValueError(
+                'The parameter "demand" must be in a range from 1 to 300.')
+
+    @property
+    def pulse_width(self) -> int:
+        return self.__pulse_width
+
+    @pulse_width.setter
+    def pulse_width(self, obj: int):
+        if not isinstance(obj, int):
+            raise TypeError('Please input an integer for a parameter value.')
+
+        if 50 <= obj <= 2000 and obj % 10 == 0:
+            self.__pulse_width = obj
+        else:
+            raise ValueError(
+                'The parameter "pulse_width" must be in a range from 50 to 2000, '
+                'and the input value must be a multiple of 10.')
+
+    @property
+    def dwell(self) -> int:
+        return self.__dwell
+
+    @dwell.setter
+    def dwell(self, obj: int):
+        if not isinstance(obj, int):
+            raise TypeError('Please input an integer for a parameter value.')
+
+        if 1 <= obj <= 990:
+            self.__dwell = obj
+        else:
+            raise ValueError('The parameter "dwell" must be in a range from 1 to 990')
+
+    @property
     def recovery(self) -> int:
         return self.__recovery
 
@@ -234,8 +224,35 @@ class DS8R:
             raise ValueError(
                 'The parameter "recovery" must be in a range from 10 to 100')
 
+    @property
+    def enabled(self) -> int:
+        return self.__enabled
+
+    @enabled.setter
+    def enabled(self, obj):
+        if not isinstance(obj, int):
+            raise TypeError('Please input an integer for a parameter value.')
+
+        if obj == 0 or obj == 1:
+            self.__enabled = obj
+        else:
+            raise ValueError(
+                'The parameter "enabled" must be either 0 (disabled) or 1 (enabled).')
 
     def run(self, force = False):
+        """Change the settings of the DS8R device and trigger an output.
+
+        Parameters
+        ---------
+        force : bool
+            ``True`` allows applying a current greater than 15.0mA,
+            which can be dangerous. The default value is ``False``.
+
+        Raises
+        ------
+        ValueError
+            If the current output is greater than 15.0mA and the 'force' value is ``False``.
+        """
         command = ('{filename} {mode} {polarity} {source} {demand} '
                    '{pulse_width} {dwell} {recovery} {enabled}')\
             .format(filename='DS8R_API',
@@ -254,6 +271,5 @@ class DS8R:
         else:
             raise ValueError(
                 'A "demand" value greater than 150 (15.0mA) may cause injury. '
-                'To apply a current higher than 15.0mA, '
-                'use "c.run(force=True)".')
-
+                'To apply a current greater than 15.0mA, '
+                'use "c.run(force = True)".')
