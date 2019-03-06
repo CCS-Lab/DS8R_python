@@ -11,18 +11,12 @@ This repository is a Python porting of [cocoanlab/DS8R_matlab][ds8r-matlab], bas
 [sungwoo-lee]: https://github.com/Sungwoo-Lee
 [cocoanlab]: https://cocoanlab.github.io/
 
-Main files:
+Files provided here include:
 
 * `D128RProxy.dll`: a 64-bit Windows DLL file provided by Digitimer.
 * `DS8R_API.exe`: compiled C++ code to use the DLL file, provided by [cocoanlab/DS8R_matlab][ds8r-matlab].
 * `DS8R_class.py`: `DS8R` class (a controller for DS8R device) is defined.
-
-Optional files:
-
-* `example.py`: example codes for `DS8R`.
-* `test.py`: codes for testing the DS8R_class by giving the *correct* parameter values.
-* `test_errors.py`: codes for testing the DS8R_class by giving the *incorrect* parameter values.
-* `test_with_electrodes.py`: codes for testing the DS8R_class with electrodes.
+* `example.py`: (optional) example codes for `DS8R`.
 
 **Important:** Before use, make sure you have installed the original DS8R software, and saved all the files in one folder.
 
