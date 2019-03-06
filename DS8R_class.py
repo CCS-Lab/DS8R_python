@@ -1,6 +1,5 @@
-"""
-Define python class 'DS8R' and its method 'run()' used to control DS8R device.
-"""
+"""Define python class 'DS8R' and its method 'run()' used to control DS8R device."""
+
 import os
 
 
@@ -54,7 +53,7 @@ class DS8R:
 
     dwell : int, optional
         "Dwell" indicates interphase interval in biphasic mode.
-        It can have a value between 1 and 999 (default: 1).
+        It can have a value between 1 and 990 (default: 1).
 
         Interphase interval is the interval between
         the stimulus phase and the recovery phase.
@@ -122,7 +121,7 @@ class DS8R:
     @mode.setter
     def mode(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
+            raise TypeError('Invalid value. Every parameter value must be an integer.')
 
         if obj == 1 or obj == 2:
             self.__mode = obj
@@ -137,7 +136,7 @@ class DS8R:
     @polarity.setter
     def polarity(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
+            raise TypeError('Invalid value. Every parameter value must be an integer.')
 
         if obj in [1, 2, 3]:
             self.__polarity = obj
@@ -152,7 +151,7 @@ class DS8R:
     @source.setter
     def source(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
+            raise TypeError('Invalid value. Every parameter value must be an integer.')
 
         if obj in [1, 2]:
             self.__source = obj
@@ -167,7 +166,7 @@ class DS8R:
     @demand.setter
     def demand(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
+            raise TypeError('Invalid value. Every parameter value must be an integer.')
 
         if 1 <= obj <= 300:
             self.__demand = obj
@@ -177,7 +176,7 @@ class DS8R:
                       'due to the limitations of the device.')
         else:
             raise ValueError(
-                'The parameter "demand" must be in a range from 1 to 300.')
+                'The parameter "demand" must be in the range of 1 to 300.')
 
     @property
     def pulse_width(self) -> int:
@@ -186,13 +185,13 @@ class DS8R:
     @pulse_width.setter
     def pulse_width(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
+            raise TypeError('Invalid value. Every parameter value must be an integer.')
 
         if 50 <= obj <= 2000 and obj % 10 == 0:
             self.__pulse_width = obj
         else:
             raise ValueError(
-                'The parameter "pulse_width" must be in a range from 50 to 2000, '
+                'The parameter "pulse_width" must be in the range of 50 to 2000, '
                 'and the input value must be a multiple of 10.')
 
     @property
@@ -202,12 +201,12 @@ class DS8R:
     @dwell.setter
     def dwell(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
+            raise TypeError('Invalid value. Every parameter value must be an integer.')
 
         if 1 <= obj <= 990:
             self.__dwell = obj
         else:
-            raise ValueError('The parameter "dwell" must be in a range from 1 to 990')
+            raise ValueError('The parameter "dwell" must be in the range of 1 to 990')
 
     @property
     def recovery(self) -> int:
@@ -216,13 +215,13 @@ class DS8R:
     @recovery.setter
     def recovery(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
+            raise TypeError('Invalid value. Every parameter value must be an integer.')
 
         if 10 <= obj <= 100:
             self.__recovery = obj
         else:
             raise ValueError(
-                'The parameter "recovery" must be in a range from 10 to 100')
+                'The parameter "recovery" must be in the range of 10 to 100')
 
     @property
     def enabled(self) -> int:
@@ -231,7 +230,7 @@ class DS8R:
     @enabled.setter
     def enabled(self, obj):
         if not isinstance(obj, int):
-            raise TypeError('Please input an integer for a parameter value.')
+            raise TypeError('Invalid value. Every parameter value must be an integer.')
 
         if obj == 0 or obj == 1:
             self.__enabled = obj
@@ -272,4 +271,4 @@ class DS8R:
             raise ValueError(
                 'A "demand" value greater than 150 (15.0mA) may cause injury. '
                 'To apply a current greater than 15.0mA, '
-                'use "c.run(force = True)".')
+                'use "c.run(force=True)".')
