@@ -1,0 +1,7 @@
+include README.md
+include LICENSE
+include ds8r/*.py
+include ds8r/D128RProxy.dll
+include ds8r/DS8R_API.exe
+
+global-exclude .git

@@ -1,10 +1,19 @@
-"""Define python class 'DS8R' and its method 'run()' used to control DS8R device."""
+"""
+Define python class 'DS8R' and its method 'run()' used to control DS8R device.
+"""
 
 import os
 
+__all__ == ['DS8R']
+
+api_path = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)),
+    'DS8R_API')
+
 
 class DS8R:
-    """A Python controller for DS8R device.
+    """
+    A Python controller for DS8R device.
 
     Attributes
     ----------
@@ -121,7 +130,8 @@ class DS8R:
     @mode.setter
     def mode(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Invalid value. Every parameter value must be an integer.')
+            raise TypeError(
+                'Invalid value. Every parameter value must be an integer.')
 
         if obj == 1 or obj == 2:
             self.__mode = obj
@@ -136,7 +146,8 @@ class DS8R:
     @polarity.setter
     def polarity(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Invalid value. Every parameter value must be an integer.')
+            raise TypeError(
+                'Invalid value. Every parameter value must be an integer.')
 
         if obj in [1, 2, 3]:
             self.__polarity = obj
@@ -151,7 +162,8 @@ class DS8R:
     @source.setter
     def source(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Invalid value. Every parameter value must be an integer.')
+            raise TypeError(
+                'Invalid value. Every parameter value must be an integer.')
 
         if obj in [1, 2]:
             self.__source = obj
@@ -166,7 +178,8 @@ class DS8R:
     @demand.setter
     def demand(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Invalid value. Every parameter value must be an integer.')
+            raise TypeError(
+                'Invalid value. Every parameter value must be an integer.')
 
         if 1 <= obj <= 300:
             self.__demand = obj
@@ -185,7 +198,8 @@ class DS8R:
     @pulse_width.setter
     def pulse_width(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Invalid value. Every parameter value must be an integer.')
+            raise TypeError(
+                'Invalid value. Every parameter value must be an integer.')
 
         if 50 <= obj <= 2000 and obj % 10 == 0:
             self.__pulse_width = obj
@@ -201,12 +215,14 @@ class DS8R:
     @dwell.setter
     def dwell(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Invalid value. Every parameter value must be an integer.')
+            raise TypeError(
+                'Invalid value. Every parameter value must be an integer.')
 
         if 1 <= obj <= 990:
             self.__dwell = obj
         else:
-            raise ValueError('The parameter "dwell" must be in the range of 1 to 990')
+            raise ValueError(
+                'The parameter "dwell" must be in the range of 1 to 990')
 
     @property
     def recovery(self) -> int:
@@ -215,7 +231,8 @@ class DS8R:
     @recovery.setter
     def recovery(self, obj: int):
         if not isinstance(obj, int):
-            raise TypeError('Invalid value. Every parameter value must be an integer.')
+            raise TypeError(
+                'Invalid value. Every parameter value must be an integer.')
 
         if 10 <= obj <= 100:
             self.__recovery = obj
@@ -230,7 +247,8 @@ class DS8R:
     @enabled.setter
     def enabled(self, obj):
         if not isinstance(obj, int):
-            raise TypeError('Invalid value. Every parameter value must be an integer.')
+            raise TypeError(
+                'Invalid value. Every parameter value must be an integer.')
 
         if obj == 0 or obj == 1:
             self.__enabled = obj
@@ -238,7 +256,7 @@ class DS8R:
             raise ValueError(
                 'The parameter "enabled" must be either 0 (disabled) or 1 (enabled).')
 
-    def run(self, force = False):
+    def run(self, force=False):
         """Change the settings of the DS8R device and trigger an output.
 
         Parameters
@@ -254,7 +272,7 @@ class DS8R:
         """
         command = ('{filename} {mode} {polarity} {source} {demand} '
                    '{pulse_width} {dwell} {recovery} {enabled}')\
-            .format(filename='DS8R_API',
+            .format(filename=api_path,
                     mode=self.mode,
                     polarity=self.polarity,
                     source=self.source,
