@@ -4,7 +4,7 @@ Define python class 'DS8R' and its method 'run()' used to control DS8R device.
 
 import os
 
-__all__ == ['DS8R']
+__all__ = ['DS8R']
 
 api_path = os.path.join(
     os.path.dirname(os.path.abspath(__file__)),
