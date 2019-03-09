@@ -22,7 +22,7 @@ in the [COCOAN laboratory][cocoanlab].
 
 ```bash
 # Install from GitHub
-pip install git+https://github.com/CCS-Lab/DS8R_python#egg=ds8r
+pip install -e git+https://github.com/CCS-Lab/DS8R_python#egg=ds8r
 ```
 
 ## Getting started
