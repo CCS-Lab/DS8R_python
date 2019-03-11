@@ -1,6 +1,7 @@
 import sys
 from codecs import open as codecs_open
 from setuptools import setup, find_packages
+import distutils.sysconfig
 
 # Check if the version is higher than 3.5.*
 if sys.version_info[:2] < (3, 5):
@@ -28,6 +29,8 @@ setup(
     license='GPL-3',
     python_requires='>=3.5',
     packages=find_packages(),
+    package_data={'ds8r': ['D128RProxy.dll', 'DS8R_API.exe']},
+    data_files=[(distutils.sysconfig.get_python_lib(), ["D128RProxy.dll"])],
     install_requires=[],
     classifiers=[
         "Development Status :: 5 - Production/Stable",
