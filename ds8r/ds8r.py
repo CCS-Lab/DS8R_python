@@ -42,11 +42,11 @@ class DS8R:
 
     demand : int, optional
         "Demand" indicates current output.
-        It can have a value between 1 and 600 (default: 20).
+        It can have a value between 1 and 150 (default: 20).
 
         The value of 1 indicates 0.1mA
         (e.g. the value of 24 indicates 2.4mA).
-        Due to safety issues, the current output is limited to 600 (30.0mA).
+        Due to safety issues, the current output is limited to 150 (15.0mA).
         Values from 1 to 19 (0.1 ~ 1.9mA) may not be correctly implemented
         due to the limitations of the device.
 
@@ -181,7 +181,7 @@ class DS8R:
             raise TypeError(
                 'Invalid value. Every parameter value must be an integer.')
 
-        if 1 <= obj <= 600:
+        if 1 <= obj <= 150:
             self.__demand = obj
 
             if 1 <= obj <= 19:
@@ -189,7 +189,7 @@ class DS8R:
                       'due to the limitations of the device.')
         else:
             raise ValueError(
-                'The parameter "demand" must be in the range of 1 to 600.')
+                'The parameter "demand" must be in the range of 1 to 150.')
 
     @property
     def pulse_width(self) -> int:
@@ -287,6 +287,6 @@ class DS8R:
             os.system(command)
         else:
             raise ValueError(
-                'A "demand" value greater than 500 (50.0mA) may cause injury. '
-                'To apply a current greater than 50.0mA, '
+                'You should be careful when applying "demand" values greater than 124 (12.4mA). '
+                'To apply a current greater than 12.4mA, '
                 'use "c.run(force=True)".')
