@@ -270,7 +270,7 @@ class DS8R:
         ValueError
             If the current output is greater than 15.0mA and the 'force' value is ``False``.
         """
-        command = ('{filename} {mode} {polarity} {source} {demand} '
+        command = ('"{filename}" {mode} {polarity} {source} {demand} '
                    '{pulse_width} {dwell} {recovery} {enabled}')\
             .format(filename=api_path,
                     mode=self.mode,
