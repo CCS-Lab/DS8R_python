@@ -40,6 +40,15 @@ ctl = DS8R(demand=20, pulse_width=1000, enabled=1, dwell=10,
 ctl.run()
 ```
 
-If you have any questions or comments, please post an issue in the GitHub repository [here][github-issue].
+## Update to use COM server
+The `DS8R_python_COM` folder includes files modified to use Common Object Model (COM) server.
+- `DS8R_python_COM/ds8r_v2.py` is a COM-based version of `ds8r/ds8r.py` for controlling the DS8R via the COM server.
+- `DS8R_python_COM/example_v2.py` is a COM-based version of `example.py`.
 
+To use COM-based version, `pywin32` must be installed.
+```bash
+pip install pywin32
+```
+
+If you have any questions or comments, please post an issue in the GitHub repository [here][github-issue].
 [github-issue]: https://github.com/CCS-Lab/DS8R_python/issues
